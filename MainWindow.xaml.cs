@@ -60,7 +60,7 @@ namespace WpfHorizPage
             {
                 e.Handled = true;
                 DataGrid dg = sender as DataGrid;
-                if (dg != null && (dg.CurrentColumn.DisplayIndex + 1 < dg.Columns.Count))
+                if (dg != null)
                 {
                     //keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
                     //keybd_event(VK_RIGHT, 0, KEYEVENTF_EXTENDEDKEY, 0);
@@ -78,7 +78,26 @@ namespace WpfHorizPage
                         if (border != null)
                         {
                             var scroll = border.Child as ScrollViewer;
-                            if (scroll != null) scroll.PageRight();
+                            if (scroll != null)
+                            {
+                                //scroll.PageRight();
+                                // custom implementation to set the new current col
+                                double right = scroll.HorizontalOffset + (scroll.ViewportWidth * 2d);
+                                var icol = dg.Columns[0];
+                                double pos = icol.ActualWidth;
+                                for (int i = 0; i < dg.Columns.Count - 1; i++)
+                                {
+                                    icol = dg.Columns[i];
+                                    pos += dg.Columns[i + 1].ActualWidth;
+                                    if (pos >= right)
+                                    {
+                                        break;
+                                    }
+                                    icol = dg.Columns[i + 1];
+                                }
+                                dg.ScrollIntoView(dg.CurrentItem, icol);
+                                dg.CurrentColumn = icol;
+                            }
                         }
                     }
                 }
@@ -87,7 +106,7 @@ namespace WpfHorizPage
             {
                 e.Handled = true;
                 DataGrid dg = sender as DataGrid;
-                if (dg != null && (dg.CurrentColumn.DisplayIndex + 1 < dg.Columns.Count))
+                if (dg != null)
                 {
                     //keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
                     //keybd_event(VK_LEFT, 0, KEYEVENTF_EXTENDEDKEY, 0);
@@ -105,7 +124,25 @@ namespace WpfHorizPage
                         if (border != null)
                         {
                             var scroll = border.Child as ScrollViewer;
-                            if (scroll != null) scroll.PageLeft();
+                            if (scroll != null)
+                            {
+                                //scroll.PageLeft(); 
+                                // custom implementation to set the new current col
+                                double left = scroll.HorizontalOffset - scroll.ViewportWidth;
+                                double pos = 0;
+                                var icol = dg.Columns[0];
+                                for (int i = 0; i < dg.Columns.Count; i++)
+                                {
+                                    icol = dg.Columns[i];
+                                    pos += icol.ActualWidth;
+                                    if (pos >= left)
+                                    {
+                                        break;
+                                    }
+                                }
+                                dg.ScrollIntoView(dg.CurrentItem, icol);
+                                dg.CurrentColumn = icol;
+                            }
                         }
                     }
                 }
