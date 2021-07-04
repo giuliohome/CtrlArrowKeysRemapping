@@ -61,7 +61,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MYKeyboardDevice.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="Utility.cs" />
     <Page Include="MainWindow.xaml">
