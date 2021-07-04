@@ -62,28 +62,52 @@ namespace WpfHorizPage
                 DataGrid dg = sender as DataGrid;
                 if (dg != null && (dg.CurrentColumn.DisplayIndex + 1 < dg.Columns.Count))
                 {
-                    keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
-                    keybd_event(VK_RIGHT, 0, KEYEVENTF_EXTENDEDKEY, 0);
-                    keybd_event(VK_RIGHT, 0, KEYEVENTF_KEYUP, 0);
-                    keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, 0);
+                    //keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
+                    //keybd_event(VK_RIGHT, 0, KEYEVENTF_EXTENDEDKEY, 0);
+                    //keybd_event(VK_RIGHT, 0, KEYEVENTF_KEYUP, 0);
+                    //keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, 0);
+
                     //var myInputSimulator = new InputSimulator();
                     //myInputSimulator.Keyboard.KeyDown(VirtualKeyCode.CONTROL);
                     //myInputSimulator.Keyboard.KeyPress(VirtualKeyCode.RIGHT);
                     //myInputSimulator.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
+
+                    if (dg.Items.Count > 0)
+                    {
+                        var border = VisualTreeHelper.GetChild(dg, 0) as Decorator;
+                        if (border != null)
+                        {
+                            var scroll = border.Child as ScrollViewer;
+                            if (scroll != null) scroll.PageRight();
+                        }
+                    }
                 }
             }
             if (e.Key == Key.PageUp)
             {
                 e.Handled = true;
+                DataGrid dg = sender as DataGrid;
+                if (dg != null && (dg.CurrentColumn.DisplayIndex + 1 < dg.Columns.Count))
                 {
-                    keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
-                    keybd_event(VK_LEFT, 0, KEYEVENTF_EXTENDEDKEY, 0);
-                    keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
-                    keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, 0);
+                    //keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, 0);
+                    //keybd_event(VK_LEFT, 0, KEYEVENTF_EXTENDEDKEY, 0);
+                    //keybd_event(VK_LEFT, 0, KEYEVENTF_KEYUP, 0);
+                    //keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, 0);
+
                     //var myInputSimulator = new InputSimulator();
                     //myInputSimulator.Keyboard.KeyDown(VirtualKeyCode.CONTROL);
                     //myInputSimulator.Keyboard.KeyPress(VirtualKeyCode.LEFT);
                     //myInputSimulator.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
+
+                    if (dg.Items.Count > 0)
+                    {
+                        var border = VisualTreeHelper.GetChild(dg, 0) as Decorator;
+                        if (border != null)
+                        {
+                            var scroll = border.Child as ScrollViewer;
+                            if (scroll != null) scroll.PageLeft();
+                        }
+                    }
                 }
             }
         }
